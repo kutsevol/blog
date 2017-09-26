@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load martortags %}
+
+{% block title %}
+    IT BLOG
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        {% for post in posts %}
+            <div class="text-center">
+                <a href='{% url 'post' slug=post.slug %}'>
+                    <img class="img-circle" width="80%" height="250"
+                         src={% if post.preview_image %}"{{ post.preview_image.url }}"{% endif %}>
+                </a>
+            </div>
+            <div class="text-center">
+                <h1>
+                    <p>
+                        <a href='{% url 'post' slug=post.slug %}'>
+                            {{ post.title }}
+                        </a>
+                    </p>
+                </h1>
+                <p>
+                    <span>
+                        <strong>
+                            Category:
+                        </strong>
+                    </span>
+
+                    <span class="indent">
+                        {%  for category in post.category.all %}
+                            <a href='{% url 'category' slug=category.slug %}'>{{ category.title }}</a>
+                            {% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                    </span>
+
+                    <span class="indent">
+                        <strong>
+                            Tags:
+                        </strong>
+                    </span>
+
+                    <span class="indent">
+                        {% for tag in post.tag.all %}
+                            <a href="#">{{ tag.title }}</a>
+                            {% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                    </span>
+
+                    <span class="indent-2x">
+                        <strong>
+                            {{ post.published_date|date:"d M Y" }}
+                        </strong>
+                    </span>
+
+                </p>
+            </div>
+            <p class="lobster">
+                <span>
+                    {{ post.text|truncatewords_html:60|safe_markdown }}
+                </span>
+            </p>
+            <div class="text-right">
+                <h1>
+                    <a href="{% url 'post' slug=post.slug %}">
+                        <button type="button" class="btn btn-info btn-lg">
+                            <span class="lobster">
+                                Continue Reading
+                            </span>
+                        </button>
+                    </a>
+                </h1>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

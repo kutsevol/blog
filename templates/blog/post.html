@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load martortags %}
+
+{% block title %}
+    {{ post.title }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="text-center">
+            <img class="img-circle" width="80%" height="250"
+                 src={% if post.preview_image %}"{{ post.preview_image.url }}"{% endif %}>
+        </div>
+        <h1>
+            <a href='{% url 'post' slug=post.slug %}'>
+                {{ post.title }}
+            </a>
+        </h1>
+        <p>
+            {{ post.text|safe_markdown }}
+        </p>
+    </div>
+{% endblock %}

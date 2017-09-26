@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    TEST
+{% endblock %}
+
+
+{% block content %}
+    <div>
+      <h1><a href='{% url 'category' slug=category.slug %}'>{{ category.title }}</a></h1>
+    </div>
+{% endblock %}
