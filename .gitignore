@@ -6,6 +6,8 @@ __pycache__
 # Django
 ./media
 *.sqlite3
+*secret_settings.py
+*.json
 
 # IDEA
 .idea/
