@@ -1,0 +1,11 @@
+# Python
+*.pyc
+__pycache__
+.python-version
+
+# Django
+./media
+*.sqlite3
+
+# IDEA
+.idea/
