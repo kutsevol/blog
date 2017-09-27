@@ -1,5 +1,11 @@
 import os
-from .secret_settings import *
+
+try:
+    from .secret_settings import *
+except ImportError:
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    MARTOR_IMGUR_CLIENT_ID = os.environ.get('MARTOR_IMGUR_CLIENT_ID')
+    DRACEDITOR_IMGUR_API_KEY = os.environ.get('DRACEDITOR_IMGUR_API_KEY')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
