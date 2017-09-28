@@ -8,6 +8,7 @@ __pycache__
 *.sqlite3
 *secret_settings.py
 *.json
+staticfiles/*
 
 # IDEA
 .idea/
