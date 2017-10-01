@@ -29,7 +29,7 @@
           <div id="navbar" class="navbar-collapse">
             <ul class="nav navbar-nav">
               <li><a href="/categories">CATEGORIES</a></li>
-                # TODO "About" and "Archives"
+{#                # TODO "About" and "Archives"#}
             </ul>
           </div>
       </div>
@@ -52,6 +52,7 @@
                         <form action="//github.us15.list-manage.com/subscribe/post?u=d09b0b1b59ce2533b417871ed&amp;id=2fe8ad9698"
                               method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate"
                               target="_blank" novalidate>
+                            {% csrf_token %}
                             <label for="mce-EMAIL">
                                 Email subscribe
                             </label>
