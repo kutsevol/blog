@@ -1,0 +1,57 @@
+#mc_embed_signup {
+    font-family: "Merriweather", "Open Sans","Helvetica Neue",Arial,Helvetica,Verdana,sans-serif;
+}
+
+#mc_embed_signup label {
+    display: block;
+    font-size: 17px;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+#mc_embed_signup input.email {
+    font-size: 13px;
+    border: 1px solid #ABB0B2;
+    color: #000;
+    background-color: #FFF;
+    box-sizing: border-box;
+    display: inline-block;
+    height: 35px;
+    width: 250px;
+    padding: 0px 0.4em;
+    margin: 0;
+    border-radius: 10px;
+    vertical-align: top;
+}
+
+#mc_embed_signup input.button {
+    font-size: 13px;
+    font-weight: bold;
+    background-color: #EEE;
+    color: #46b8da;
+    width: 250px;
+    height: 35px;
+    line-height: 35px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    letter-spacing: .03em;
+    box-sizing: border-box;
+    padding: 0 18px;
+    display: inline-block;
+    transition-property: all;
+    transition-duration: 0.23s;
+    transition-timing-function: ease-in-out;
+    transition-delay: 0s;
+}
+
+#mc_embed_signup input.button:hover {
+    background-color: #ccc;
+    color: #337ab7;
+    cursor: pointer;
+}
+
+#mc_embed_signup form {
+    text-align: center;
+    padding: 10px 0 10px 0;
+}
