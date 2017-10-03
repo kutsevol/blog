@@ -9,18 +9,16 @@
     <div class="container-fluid">
         {% for post in posts %}
             <div class="text-center">
-                <a href='{% url 'post' slug=post.slug %}'>
-                    <img class="img-circle" width="80%" height="250"
-                         src={% if post.preview_image %}"{{ post.preview_image.url }}"{% endif %}>
+                <a href="{% url 'post' slug=post.slug %}">
+                    <img class="img-circle" width="60%" height="250"
+                         src='{% if post.preview_image %}{{ post.preview_image.url }}{% endif %}'>
                 </a>
             </div>
             <div class="text-center">
                 <h1>
-                    <p>
-                        <a href='{% url 'post' slug=post.slug %}'>
-                            {{ post.title }}
-                        </a>
-                    </p>
+                    <a href="{% url 'post' slug=post.slug %}">
+                        {{ post.title }}
+                    </a>
                 </h1>
                 <p>
                     <span>
@@ -31,7 +29,7 @@
 
                     <span class="indent">
                         {%  for category in post.category.all %}
-                            <a href='{% url 'category' slug=category.slug %}'>{{ category.title }}</a>
+                            <a href="{% url 'category' slug=category.slug %}">{{ category.title }}</a>
                             {% if not forloop.last %},{% endif %}
                         {% endfor %}
                     </span>
