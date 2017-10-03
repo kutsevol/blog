@@ -39,6 +39,7 @@ class Post(models.Model):
     # Attributes
     title = models.CharField(max_length=200, unique=True, blank=False)
     slug = models.SlugField(max_length=100, unique=True, blank=False, null=True)
+    description = MartorField(default='')
     text = MartorField()
     created_date = models.DateTimeField(default=timezone.now, blank=False, null=True)
     published_date = models.DateTimeField(blank=False, null=True)
