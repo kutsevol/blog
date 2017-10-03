@@ -1,0 +1,27 @@
+<span class="indent">
+    <strong>
+        Category:
+    </strong>
+
+    <!--All categories for post-->
+    {%  for category in post.category.all %}
+        <a href="{% url 'category' slug=category.slug %}">{{ category.title }}</a>
+        {% if not forloop.last %},{% endif %}
+    {% endfor %}
+
+    <strong>
+        Tags:
+    </strong>
+
+    <!--All tags for post-->
+    {% for tag in post.tag.all %}
+        <a href="#">{{ tag.title }}</a>
+        {% if not forloop.last %},{% endif %}
+    {% endfor %}
+</span>
+
+<span class="indent-2x">
+    <strong>
+        {{ post.published_date|date:"d M Y" }}
+    </strong>
+</span>

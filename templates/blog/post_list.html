@@ -20,46 +20,17 @@
                         {{ post.title }}
                     </a>
                 </h1>
-                <p>
-                    <span>
-                        <strong>
-                            Category:
-                        </strong>
-                    </span>
 
-                    <span class="indent">
-                        {%  for category in post.category.all %}
-                            <a href="{% url 'category' slug=category.slug %}">{{ category.title }}</a>
-                            {% if not forloop.last %},{% endif %}
-                        {% endfor %}
-                    </span>
-
-                    <span class="indent">
-                        <strong>
-                            Tags:
-                        </strong>
-                    </span>
-
-                    <span class="indent">
-                        {% for tag in post.tag.all %}
-                            <a href="#">{{ tag.title }}</a>
-                            {% if not forloop.last %},{% endif %}
-                        {% endfor %}
-                    </span>
-
-                    <span class="indent-2x">
-                        <strong>
-                            {{ post.published_date|date:"d M Y" }}
-                        </strong>
-                    </span>
-
-                </p>
+                <!--Include style for categories and tags for post-->
+                {% include 'blog/span_categories_tags.html' %}
             </div>
+
             <p class="lobster">
                 <span>
                     {{ post.description|safe_markdown }}
                 </span>
             </p>
+
             <div class="text-right">
                 <h1>
                     <a href="{% url 'post' slug=post.slug %}">
