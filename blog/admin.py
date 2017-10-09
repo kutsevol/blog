@@ -1,10 +1,5 @@
 from django.contrib import admin
-from .models import Post, Category, CategoryToPost, Tag, TagToPost
-
-
-class CategoryInline(admin.TabularInline):
-    model = CategoryToPost
-    extra = 0
+from .models import Post, Category, Tag, TagToPost
 
 
 class TagInline(admin.TabularInline):
@@ -13,10 +8,10 @@ class TagInline(admin.TabularInline):
 
 
 class PostMartorAdmin(admin.ModelAdmin):
-    inlines = [CategoryInline, TagInline]
+    inlines = [TagInline]
 
     list_display = [field.name for field in Post._meta.fields if field.name not in ('id', 'description', 'text')]
-    list_display += ['categories', 'tags']
+    list_display += ['tags']
 
     list_display_links = ['title', 'slug']
     list_filter = ['category', 'tag']
@@ -28,7 +23,7 @@ class PostMartorAdmin(admin.ModelAdmin):
 
     fieldsets = [
         (None, {'fields': ['author', 'slug']}),
-        ('Body article', {'fields': ['title', 'description', 'text', 'preview_image']}),
+        ('Body article', {'fields': ['title', 'category', 'description', 'text', 'preview_image']}),
         ('Date information', {'fields': ['created_date', 'published_date'],
                               'classes': ['collapse']}),
     ]
