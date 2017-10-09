@@ -4,9 +4,10 @@
     </strong>
 
     <!--All categories for post-->
-    {%  for category in post.category.all %}
-        <a href="{% url 'category' slug=category.slug %}">{{ category.title }}</a>
-        {% if not forloop.last %},{% endif %}
+    {%  for post_category in posts_category %}
+        {% if post.title == post_category.title %}
+            <a href="{% url 'category' slug=post_category.category__title %}">{{ post_category.category__title }}</a>
+        {% endif %}
     {% endfor %}
 
     <strong>

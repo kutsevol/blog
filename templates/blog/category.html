@@ -1,11 +1,9 @@
 {% extends 'base.html' %}
+{% load blog_tags %}
 
 {% block title %}
-    {{ category.title }}
+    {{ category.title|title }}
 {% endblock %}
 
 {% block content %}
-    <div class="container-fluid">
-      <h1><a href="{% url 'category' slug=category.slug %}">{{ category.title }}</a></h1>
-    </div>
 {% endblock %}
