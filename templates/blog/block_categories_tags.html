@@ -6,7 +6,9 @@
     <!--All categories for post-->
     {%  for post_category in posts_category %}
         {% if post.title == post_category.title %}
-            <a href="{% url 'category' slug=post_category.category__title %}">{{ post_category.category__title }}</a>
+            <a data-parent="#accordion" href="/categories#{{ post_category.category__title }}">
+                {{ post_category.category__title }}
+            </a>
         {% endif %}
     {% endfor %}
 
