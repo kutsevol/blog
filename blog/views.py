@@ -6,25 +6,28 @@ from .models import Post, Category
 p_values = Post.objects.values
 
 
-class AbstractPost:
+class PostListView(ListView):
+    queryset = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    template_name = 'blog/post_list.html'
+    context_object_name = 'posts'
 
     def get_context_data(self, **kwargs):
-        context = super(AbstractPost, self).get_context_data(**kwargs)
+        context = super(PostListView, self).get_context_data(**kwargs)
         value = ('title', 'category__title')
         context['posts_category'] = p_values(*value)
         return context
 
 
-class PostListView(ListView, AbstractPost):
-    queryset = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
-    template_name = 'blog/post_list.html'
-    context_object_name = 'posts'
-
-
-class PostView(DetailView, AbstractPost):
+class PostView(DetailView):
     model = Post
     template_name = 'blog/post.html'
     context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super(PostView, self).get_context_data(**kwargs)
+        value = ('title', 'category__title')
+        context['posts_category'] = p_values(*value)
+        return context
 
 
 class CategoryListView(ListView):
