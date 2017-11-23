@@ -5,8 +5,8 @@ from martor.models import MartorField
 
 
 class Category(models.Model):
-    title = models.CharField(max_length=200, unique=True, blank=False, null=True)
-    slug = models.SlugField(max_length=200, unique=True, blank=False, null=True)
+    title = models.CharField(max_length=200, unique=True, default='')
+    slug = models.SlugField(max_length=200, unique=True, default='')
 
     def get_absolute_url(self):
         return reverse('category', args=(self.slug, ))
@@ -33,17 +33,19 @@ class Tag(models.Model):
 class Post(models.Model):
     # Relations
     author = models.ForeignKey('auth.User')
-    category = models.ForeignKey(Category, blank=False, null=True)
+    category = models.ForeignKey(Category, default='')
     tag = models.ManyToManyField(Tag, blank=False, through='TagToPost')
 
     # Attributes
     title = models.CharField(max_length=200, unique=True, blank=False)
-    slug = models.SlugField(max_length=100, unique=True, blank=False, null=True)
-    description = MartorField(default='')
-    text = MartorField(default='')
-    created_date = models.DateTimeField(default=timezone.now, blank=False, null=True)
+    slug = models.SlugField(max_length=100, unique=True, default='')
+    description = MartorField(default='', blank=False)
+    text = MartorField(default='', blank=False)
+    created_date = models.DateTimeField(default=timezone.now, blank=False,
+                                        null=True)
     published_date = models.DateTimeField(blank=False, null=True)
-    preview_image = models.ImageField(upload_to="image/", blank=True, null=True)
+    preview_image = models.ImageField(upload_to="image/", blank=True,
+                                      null=True)
 
     # Functions
     def publish(self):
