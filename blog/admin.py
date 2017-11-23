@@ -10,7 +10,8 @@ class TagInline(admin.TabularInline):
 class PostMartorAdmin(admin.ModelAdmin):
     inlines = [TagInline]
 
-    list_display = [field.name for field in Post._meta.fields if field.name not in ('id', 'description', 'text')]
+    list_display = [field.name for field in Post._meta.fields
+                    if field.name not in ('id', 'description', 'text')]
     list_display += ['tags']
 
     list_display_links = ['title', 'slug']
@@ -23,7 +24,8 @@ class PostMartorAdmin(admin.ModelAdmin):
 
     fieldsets = [
         (None, {'fields': ['author', 'slug']}),
-        ('Body article', {'fields': ['title', 'category', 'description', 'text', 'preview_image']}),
+        ('Body article', {'fields': ['title', 'category', 'description',
+                                     'text', 'preview_image']}),
         ('Date information', {'fields': ['created_date', 'published_date'],
                               'classes': ['collapse']}),
     ]

@@ -7,7 +7,8 @@ p_values = Post.objects.values
 
 
 class PostListView(ListView):
-    queryset = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    filtered_objects = Post.objects.filter(published_date__lte=timezone.now())
+    queryset = filtered_objects.order_by('-published_date')
     template_name = 'blog/post_list.html'
     context_object_name = 'posts'
 
@@ -38,11 +39,13 @@ class CategoryListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(CategoryListView, self).get_context_data(**kwargs)
 
-        value = 'category__title'
-        context['count_category'] = p_values(value).order_by('category').annotate(count=Count('category'))
+        values = ('category__title', )
+        context['count_category'] = p_values(*values).order_by('category').\
+            annotate(count=Count('category'))
 
-        value = ('title', 'slug', 'published_date', 'category__title')
-        context['post_category_date'] = p_values(*value).order_by('-published_date')
+        values = ('title', 'slug', 'published_date', 'category__title')
+        context['post_category_date'] = p_values(*values).\
+            order_by('-published_date')
         return context
 
 
