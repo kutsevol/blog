@@ -1,14 +1,15 @@
 import os
 
 try:
-    from .secret_settings import *
+    from .secret_settings import * # noqa
 except ImportError:
     SECRET_KEY = os.environ.get('SECRET_KEY')
     MARTOR_IMGUR_CLIENT_ID = os.environ.get('MARTOR_IMGUR_CLIENT_ID')
     DRACEDITOR_IMGUR_API_KEY = os.environ.get('DRACEDITOR_IMGUR_API_KEY')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+abs_path_file = os.path.abspath(__file__)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(abs_path_file)))
 
 # Application definition
 
@@ -72,16 +73,19 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', # noqa
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
