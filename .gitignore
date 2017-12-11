@@ -4,7 +4,7 @@
 .python-version
 
 # Django
-./media
+**/media
 *.sqlite3
 *secret_settings.py
 *.json
