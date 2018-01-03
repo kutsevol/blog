@@ -1,1 +1,3 @@
-{{ obj.description }}
+{% load martortags %}
+
+{{ obj.description|safe_markdown }}
