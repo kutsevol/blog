@@ -1,6 +1,6 @@
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
-from django.core.urlresolvers import reverse
 from martor.models import MartorField
 
 
