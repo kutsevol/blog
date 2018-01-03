@@ -1,7 +1,10 @@
-from django.views.generic import DetailView, ListView
-from django.utils import timezone
+from django.contrib.syndication.views import Feed
 from django.db.models import Count
+from django.utils import timezone
+from django.views.generic import DetailView, ListView
+
 from .models import Post, Category
+
 
 p_values = Post.objects.values
 
@@ -53,3 +56,15 @@ class CategoryView(DetailView):
     model = Category
     template_name = 'blog/category.html'
     context_object_name = 'category'
+
+
+class PostsFeed(Feed):
+    title = 'Kutsevol Blog'
+    description = 'Блог о программировании и не только!'
+    link = '/'
+
+    def items(self):
+        return Post.objects.all()
+
+    def item_title(self, item):
+        return item.title
