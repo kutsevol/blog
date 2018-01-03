@@ -63,7 +63,7 @@ class PostsFeed(Feed):
     description = 'Блог о программировании и не только!'
     link = '/'
 
-    title_tempalte = 'rss/rss_title.html'
+    title_template = 'rss/rss_title.html'
     description_template = 'rss/rss_description.html'
 
     @staticmethod
