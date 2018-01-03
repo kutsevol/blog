@@ -63,11 +63,9 @@ class PostsFeed(Feed):
     description = 'Блог о программировании и не только!'
     link = '/'
 
-    def items(self):
+    title_tempalte = 'rss/rss_title.html'
+    description_template = 'rss/rss_description.html'
+
+    @staticmethod
+    def items():
         return Post.objects.all()
-
-    def item_title(self, item):
-        return item.title
-
-    def item_description(self, item):
-        return item.description
