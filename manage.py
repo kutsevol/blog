@@ -3,6 +3,7 @@ import os
 import sys
 
 if __name__ == "__main__":
+    # Path to default settings django
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "my_site.settings.prod")
     try:
         from django.core.management import execute_from_command_line
