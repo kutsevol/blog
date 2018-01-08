@@ -60,7 +60,7 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = self.slug.lower()
-        super(Post, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     # Meta
     class Meta:
@@ -72,6 +72,9 @@ class Post(models.Model):
 class TagToPost(models.Model):
     post = models.ForeignKey(Post)
     tag = models.ForeignKey(Tag)
+
+    def __str__(self):
+        return ''
 
     class Meta:
         verbose_name = "Tag to post"
