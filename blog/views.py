@@ -68,4 +68,4 @@ class PostsFeed(Feed):
 
     @staticmethod
     def items():
-        return Post.objects.all()
+        return Post.objects.exclude(published_date__gte=timezone.now())
