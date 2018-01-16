@@ -61,7 +61,7 @@ class CategoryView(DetailView):
 class PostsFeed(Feed):
     title = 'Kutsevol Blog'
     description = 'Блог о программировании и не только!'
-    link = '/'
+    link = '/feeds'
 
     title_template = 'rss/rss_title.html'
     description_template = 'rss/rss_description.html'
