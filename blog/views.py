@@ -61,6 +61,23 @@ class CategoryView(DetailView):
 
 
 class PostsFeed(ListView):
+    """
+    Class for feed rss is inherited from ListView.
+
+    queryset - define a filtered list of objects you can be more specific about
+    the objects that will be visible in the view
+
+    template_name - path to template (XML represent)
+
+    content_type - Content type to use for all HttpResponse objects, if a MIME
+    type isn’t manually specified. Used with DEFAULT_CHARSET to construct the
+    Content-Type header. Default: 'text/html'
+
+    updated - variable for template used in XML <updated></updated>
+
+    posts - variable for template used in XML, filtered posts which not
+    published yet.
+    """
     queryset = Post.objects.all()
     template_name = 'rss/atom.xml'
     content_type = 'application/xml'
@@ -68,6 +85,10 @@ class PostsFeed(ListView):
     posts = Post.objects.exclude(published_date__gte=timezone.now())
 
     def get_context_data(self, **kwargs):
+        """
+        Add some extra information beyond that provided by the generic view.
+        :return: context in template like dict
+        """
         context = super().get_context_data(**kwargs)
         context['posts'] = self.posts
         context['updated'] = self.updated
