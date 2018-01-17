@@ -15,8 +15,7 @@ class PostListView(ListView):
     context_object_name = 'posts'
 
     def get_context_data(self, **kwargs):
-        # TODO Refactoring super
-        context = super(PostListView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         value = ('title', 'category__title')
         context['posts_category'] = p_values(*value)
         return context
@@ -28,8 +27,7 @@ class PostView(DetailView):
     context_object_name = 'post'
 
     def get_context_data(self, **kwargs):
-        # TODO Refactoring super
-        context = super(PostView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         value = ('title', 'category__title')
         context['posts_category'] = p_values(*value)
         return context
@@ -41,8 +39,7 @@ class CategoryListView(ListView):
     context_object_name = 'categories'
 
     def get_context_data(self, **kwargs):
-        # TODO Refactoring super
-        context = super(CategoryListView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
         values = ('category__title', )
         context['count_category'] = p_values(*values).order_by('category').\
@@ -60,6 +57,7 @@ class CategoryView(DetailView):
     context_object_name = 'category'
 
 
+# TODO Need move this class and all functionality by feed rss in separated app.
 class PostsFeed(ListView):
     """
     Class for feed rss is inherited from ListView.
