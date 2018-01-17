@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>{{ blog_title }}</title>
+    <link href="{{ request.get_host }}" rel="alternate" />
+    <link href="{{ request.get_host }}{% url 'rss_feed' %}" rel="self" />
+    <id>{{ request.get_host }}</id>
+    <updaetd> {{ updated|date:"Y-m-d\TH:i:s\Z" }} </updaetd>
     {% for post in posts %}
         <entry>
             <title>{{ post.title }}</title>
             <link href="{{ request.get_host }}{% url 'post' slug=post.slug %}"/>
             <id>{{ request.get_host }}{% url 'post' slug=post.slug %}</id>
-            <created>{{ post.created_date|date:"Y-m-d\TH:i:s\Z"}}</created>
-            <updated>{{ post.published_date|date:"Y-m-d\TH:i:s\Z"}}</updated>
-            <content type="html">{{ post.description|safe }}</content>
+            <created>{{ post.created_date|date:"Y-m-d\TH:i:s\Z" }}</created>
+            <updated>{{ post.published_date|date:"Y-m-d\TH:i:s\Z" }}</updated>
+            <content type="html">{{ post.description }}</content>
         </entry>
     {% endfor %}
 </feed>
