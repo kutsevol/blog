@@ -10,6 +10,10 @@ span.post-body {
     line-height: 1.75;
 }
 
+span.post-description {
+    font-size: 14px;
+}
+
 .lobster {
     font-family: "Lobster", sans-serif;
     font-size: 25px;
