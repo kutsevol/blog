@@ -25,11 +25,9 @@
                 {% include 'blog/block_categories_tags.html' %}
             </div>
 
-            <p class="lobster">
-                <span class="post-description">
-                    {{ post.description|safe_markdown }}
-                </span>
-            </p>
+            <span class="post-description">
+                {{ post.description|safe_markdown }}
+            </span>
 
             <div class="text-right">
                 <h1>
