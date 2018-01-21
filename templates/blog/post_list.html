@@ -10,7 +10,7 @@
         {% for post in posts %}
             <div class="text-center">
                 <a href="{% url 'post' slug=post.slug %}">
-                    <img class="img-circle" width="60%" height="250"
+                    <img class="img-circle" width="40%" height="200"
                          src='{% if post.preview_image %}{{ post.preview_image.url }}{% endif %}'>
                 </a>
             </div>
@@ -25,11 +25,9 @@
                 {% include 'blog/block_categories_tags.html' %}
             </div>
 
-            <p class="lobster">
-                <span>
-                    {{ post.description|safe_markdown }}
-                </span>
-            </p>
+            <span class="post-description">
+                {{ post.description|safe_markdown }}
+            </span>
 
             <div class="text-right">
                 <h1>
