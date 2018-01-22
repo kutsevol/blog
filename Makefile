@@ -1,4 +1,4 @@
-.PHONY: lint run migrations migrate pre-commit-flake
+.PHONY: static lint migrations migrate pre-commit-flake run
 lint:
 	flake8
 
@@ -13,3 +13,6 @@ migrate:
 
 pre-commit-flake:
 	flake8 --install-hook git && git config --bool flake8.strict true
+
+static:
+	./manage.py collectstatic
