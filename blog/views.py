@@ -5,53 +5,110 @@ from django.views.generic import DetailView, ListView
 from .models import Post, Category
 from .settings import BLOG_TITLE
 
-p_values = Post.objects.values
-
 
 class PostListView(ListView):
-    filtered_objects = Post.objects.filter(published_date__lte=timezone.now())
-    queryset = filtered_objects.order_by('-published_date')
+    """
+    Class based on ListView for displayed all posts on start page.
+
+    queryset - all objects from Post models where published date >= current
+    time and reverse ordering.
+
+    template_name - path to template file for this view.
+
+    context_object_name - name of variable to access from templates.
+    """
+    queryset = Post.objects.filter(published_date__lte=timezone.now()).\
+        order_by('-published_date')
     template_name = 'blog/post_list.html'
     context_object_name = 'posts'
 
     def get_context_data(self, **kwargs):
+        """
+        Add some extra information beyond that provided by the generic view.
+
+        posts_category in context - get all pairs post title - category title
+
+        :return: context in template like dict
+        """
         context = super().get_context_data(**kwargs)
         value = ('title', 'category__title')
-        context['posts_category'] = p_values(*value)
+        context['posts_category'] = Post.objects.values(*value)
         return context
 
 
 class PostView(DetailView):
+    """
+    Class based on DetailView for displayed one page.
+    model - represents an alternative query of the form Post.objects.all()
+    template_name - path to template file for this view.
+    context_object_name - name of variable to access from templates.
+    """
     model = Post
     template_name = 'blog/post.html'
     context_object_name = 'post'
 
     def get_context_data(self, **kwargs):
+        """
+        Add some extra information beyond that provided by the generic view.
+        posts_category in context - get all pairs post title - category title
+        :return: context in template like dict
+        """
         context = super().get_context_data(**kwargs)
         value = ('title', 'category__title')
-        context['posts_category'] = p_values(*value)
+        context['posts_category'] = Post.objects.values(*value)
         return context
 
 
+# TODO Need move this class and CategoryView with all functionality in
+# separated app.
 class CategoryListView(ListView):
-    queryset = Category.objects.all()
+    """
+    Class based on DetailView for displayed one page.
+
+    model - represents an alternative query of the form Category.objects.all()
+
+    template_name - path to template file for this view.
+
+    context_object_name - name of variable to access from templates.
+    """
+    model = Category
     template_name = 'blog/categories.html'
     context_object_name = 'categories'
 
     def get_context_data(self, **kwargs):
+        """
+        Add some extra information beyond that provided by the generic view.
+
+        count_category in context - how much posts in each category, need for
+        displayed numbers near category title
+
+        post_category_date - full information for displayed data in panel
+        collapse.
+
+        :return: context in template like dict
+        """
         context = super().get_context_data(**kwargs)
 
         values = ('category__title', )
-        context['count_category'] = p_values(*values).order_by('category').\
-            annotate(count=Count('category'))
+        context['count_category'] = Post.objects.values(*values).\
+            order_by('category').annotate(count=Count('category'))
 
         values = ('title', 'slug', 'published_date', 'category__title')
-        context['post_category_date'] = p_values(*values).\
+        context['post_category_date'] = Post.objects.values(*values).\
             order_by('-published_date')
         return context
 
 
 class CategoryView(DetailView):
+    """
+    Class based on DetailView for displayed one page.
+
+    model - represents an alternative query of the form Category.objects.all()
+
+    template_name - path to template file for this view.
+
+    context_object_name - name of variable to access from templates.
+    """
     model = Category
     template_name = 'blog/category.html'
     context_object_name = 'category'
@@ -85,6 +142,7 @@ class PostsFeed(ListView):
     def get_context_data(self, **kwargs):
         """
         Add some extra information beyond that provided by the generic view.
+
         :return: context in template like dict
         """
         context = super().get_context_data(**kwargs)
