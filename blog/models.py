@@ -5,38 +5,110 @@ from martor.models import MartorField
 
 
 class Category(models.Model):
+    """
+    Fields: title, slug - Each field is specified as a class attribute, and
+    each attribute maps to a database column.
+
+    Parameters: max_length - CharField (and its subclasses) require a max_length
+    argument which specifies the size of the VARCHAR database field used to
+    store the data;
+    unique - If True, this field must be unique throughout the table.
+    default - The default value for the field. This can be a value or a
+    callable object. If callable it will be called every time a new object is
+    created.
+    """
     title = models.CharField(max_length=200, unique=True, default='')
     slug = models.SlugField(max_length=200, unique=True, default='')
 
     def get_absolute_url(self):
+        """
+        Method to tell Django how to calculate the canonical URL for an object.
+        :return: a string that can be used to refer to the object over HTTP.
+        """
         return reverse('category', args=(self.slug, ))
 
     def __str__(self):
+        """
+        Method is called whenever you call str() on an object. Django uses
+        str(obj) in a number of places. Most notably, to display an object in
+        the Django admin site and as the value inserted into a template when it
+        displays an object.
+        :return: human-readable representation of the model
+        """
         return self.title
 
     class Meta:
+        """
+        Attributes:
+        verbose_name - A human-readable name for the object,
+        singular;
+        verbose_name_plural - The plural name for the object.
+        """
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
 
 
 class Tag(models.Model):
+    """
+     Fields: title - Each field is specified as a class attribute, and
+     each attribute maps to a database column.
+
+     Parameters: max_length - CharField (and its subclasses) require a
+     max_length argument which specifies the size of the VARCHAR database field
+     used to store the data;
+     blank - If True, the field is allowed to be blank.
+     """
     title = models.CharField(max_length=200, blank=False)
 
     def __str__(self):
+        """
+        Method is called whenever you call str() on an object. Django uses
+        str(obj) in a number of places. Most notably, to display an object in
+        the Django admin site and as the value inserted into a template when it
+        displays an object.
+        :return: human-readable representation of the model
+        """
         return self.title
 
     class Meta:
+        """
+        Attributes:
+        verbose_name - A human-readable name for the object,
+        singular;
+        verbose_name_plural - The plural name for the object.
+        """
         verbose_name = "Tag"
         verbose_name_plural = "Tags"
 
 
 class Post(models.Model):
-    # Relations
+    """
+    Fields: title, slug, description, text, created_date, published_date,
+    preview_image - Each field is specified as a class attribute, and each
+    attribute maps to a database column.
+
+    Relations fields: author, category - ForeignKey. A many-to-one relationship.
+    tag - ManyToManyFields. A many-to-many relationship.
+
+    Parameters: max_length - CharField (and its subclasses) require a max_length
+    argument which specifies the size of the VARCHAR database field used to
+    store the data;
+    unique - If True, this field must be unique throughout the table.
+    default - The default value for the field. This can be a value or a
+    callable object. If callable it will be called every time a new object is
+    created;
+    blank - If True, the field is allowed to be blank;
+    through - Django will automatically generate a table to manage many-to-many
+    relationships. However, if you want to manually specify the intermediary
+    table;
+    upload_to - This attribute provides a way of setting the upload directory
+    and file name;
+    null - If True, Django will store empty values as NULL in the database.
+    """
     author = models.ForeignKey('auth.User')
     category = models.ForeignKey(Category, default='')
     tag = models.ManyToManyField(Tag, blank=False, through='TagToPost')
 
-    # Attributes
     title = models.CharField(max_length=200, unique=True, blank=False)
     slug = models.SlugField(max_length=100, unique=True, default='')
     description = MartorField(default='', blank=False)
@@ -47,35 +119,75 @@ class Post(models.Model):
     preview_image = models.ImageField(upload_to="image/", blank=True,
                                       null=True)
 
-    # Functions
     def publish(self):
+        """
+        Method is for publication record.
+        """
         self.published_date = timezone.now()
         self.save()
 
     def get_absolute_url(self):
+        """
+        Method to tell Django how to calculate the canonical URL for an object.
+        :return: a string that can be used to refer to the object over HTTP.
+        """
         return reverse('post', args=(self.slug, ))
 
     def tags(self):
+        """
+        Additional function for changing all tag objects in one string tag
+        (used in admin.py)
+        :return: human-readable represent all tags
+        """
         return ', '.join(tg.title for tg in self.tag.all())
 
     def save(self, *args, **kwargs):
+        """
+        Using for customized saving behavior.
+        """
         self.slug = self.slug.lower()
         super().save(*args, **kwargs)
 
-    # Meta
     class Meta:
+        """
+        Attributes:
+        verbose_name - A human-readable name for the object,
+        singular;
+        verbose_name_plural - The plural name for the object;
+        ordering - This is a tuple or list of strings and/or query expressions.
+        Each string is a field name with an optional “-” prefix, which
+        indicates descending order. Fields without a leading “-” will be ordered
+        ascending. Use the string “?” to order randomly.
+        """
         verbose_name = 'Post'
         verbose_name_plural = 'Posts'
         ordering = ['-id']
 
 
 class TagToPost(models.Model):
+    """
+    Class for many-to-many relationship.
+    Fields: post, tag - ForeignKey. A many-to-one relationship.
+    """
     post = models.ForeignKey(Post)
     tag = models.ForeignKey(Tag)
 
     def __str__(self):
+        """
+        Method is called whenever you call str() on an object. Django uses
+        str(obj) in a number of places. Most notably, to display an object in
+        the Django admin site and as the value inserted into a template when it
+        displays an object.
+        :return: human-readable representation of the model
+        """
         return ''
 
     class Meta:
+        """
+        Attributes:
+        verbose_name - A human-readable name for the object,
+        singular;
+        verbose_name_plural - The plural name for the object;
+        """
         verbose_name = "Tag to post"
         verbose_name_plural = "Tags to post"
