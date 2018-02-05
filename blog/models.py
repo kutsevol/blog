@@ -1,4 +1,5 @@
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 from martor.models import MartorField
@@ -32,7 +33,7 @@ class Tag(models.Model):
 
 class Post(models.Model):
     # Relations
-    author = models.ForeignKey('auth.User')
+    author = models.ForeignKey(User)
     category = models.ForeignKey(Category, default='')
     tag = models.ManyToManyField(Tag, blank=False, through='TagToPost')
 
@@ -41,7 +42,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=100, unique=True, default='')
     description = MartorField(default='', blank=False)
     text = MartorField(default='', blank=False)
-    created_date = models.DateTimeField(default=timezone.now, blank=False,
+    created_date = models.DateTimeField(auto_now_add=True, blank=False,
                                         null=True)
     published_date = models.DateTimeField(blank=False, null=True)
     preview_image = models.ImageField(upload_to="image/", blank=True,
