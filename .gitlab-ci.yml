@@ -13,6 +13,5 @@ tests:
     stage: test
     image: python:3.6.1
     script:
-        - env | grep SECRET_KEY
         - make install-requirements
         - make test
