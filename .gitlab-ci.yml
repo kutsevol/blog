@@ -1,5 +1,6 @@
 stages:
     - pre-build
+    - test
 
 lint-python:
     stage: pre-build
@@ -7,3 +8,9 @@ lint-python:
     script:
         - pip install flake8
         - make lint
+
+tests:
+    stage: test
+    image: 3.6.1
+    script:
+        - make test
