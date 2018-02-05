@@ -11,6 +11,7 @@ lint-python:
 
 tests:
     stage: test
-    image: 3.6.1
+    image: python:3.6.1
     script:
+        - make install-requirements
         - make test

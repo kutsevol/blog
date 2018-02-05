@@ -19,3 +19,6 @@ static:
 
 test:
 	pytest -vv
+
+install-requirements:
+	pip install -r requirements.txt
