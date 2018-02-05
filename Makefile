@@ -1,4 +1,4 @@
-.PHONY: static lint migrations migrate pre-commit-flake run
+.PHONY: static lint migrations migrate pre-commit-flake run test
 lint:
 	flake8
 
@@ -16,3 +16,9 @@ pre-commit-flake:
 
 static:
 	./manage.py collectstatic
+
+test:
+	pytest -vv
+
+install-requirements:
+	pip install -r requirements.txt
