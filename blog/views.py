@@ -79,7 +79,7 @@ class PostsFeed(ListView):
     queryset = Post.objects.all()
     template_name = 'rss/atom.xml'
     content_type = 'application/xml'
-    updated = queryset[0].published_date
+    updated = queryset.first().published_date if queryset else None
     posts = Post.objects.exclude(published_date__gte=timezone.now())
 
     def get_context_data(self, **kwargs):
