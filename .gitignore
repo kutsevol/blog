@@ -12,3 +12,4 @@ staticfiles/*
 
 # IDEA
 .idea/
+**/.pytest_cache/
