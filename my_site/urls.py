@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
+from blog.views import Error404View
+
 
 urlpatterns = [
     url(r'^prod-admin/', admin.site.urls),
@@ -26,6 +28,7 @@ urlpatterns = [
     url(r'', include('blog.urls'))
 ]
 
+handler404 = Error404View.as_view()
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL,

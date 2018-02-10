@@ -2,6 +2,7 @@ from django.conf.urls import url
 from .views import PostListView, PostView, CategoryView, CategoryListView, \
     PostsFeed
 
+
 urlpatterns = [
     # index page
     url(r'^$', PostListView.as_view(), name='posts'),
