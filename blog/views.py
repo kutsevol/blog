@@ -1,7 +1,7 @@
 from django.db.models import Count
 from django.db.utils import OperationalError
 from django.utils import timezone
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, TemplateView
 
 from .models import Post, Category
 from .settings import BLOG_TITLE
@@ -157,3 +157,7 @@ class PostsFeed(ListView):
         context['updated'] = self.updated
         context['blog_title'] = BLOG_TITLE
         return context
+
+
+class Error404View(TemplateView):
+    template_name = 'blog/404.html'
