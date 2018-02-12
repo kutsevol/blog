@@ -1,15 +1,16 @@
 # Python
-*.pyc
-**/__pycache__
+**/*.pyc
 .python-version
+**/__pycache__/
+**/.pytest_cache/
+
 
 # Django
-**/media
-*.sqlite3
-*secret_settings.py
-*.json
-staticfiles/*
+**/media/
+**/staticfiles/
+**/*secret_settings.py
+**/*.sqlite3
+**/*.json
 
 # IDEA
 .idea/
-**/.pytest_cache/
