@@ -1,10 +1,5 @@
-image: gitlab/dind
-
 variables:
   DOCKER_DRIVER: overlay
-
-services:
-  - docker:dind
 
 stages:
     - pre-build
@@ -28,7 +23,9 @@ tests:
         - make test
 
 build_docker:
+    image: docker:latest
     stage: build
-    script:
+    before_script:
         - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    script:
         - make docker-build
