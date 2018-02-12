@@ -34,6 +34,7 @@ tests:
 build_docker:
     stage: build
     before_script:
+        - apk update && apk add make
         - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     script:
         - make docker-build
