@@ -29,6 +29,7 @@ build_docker:
     stage: build
     image: gitlab/dind
     before_script:
+        - set -x
         - apt-get install build-essential
         - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     script:
