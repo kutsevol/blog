@@ -1,4 +1,4 @@
-DOCKER_PATH = registry.gitlab.com/gitlab-org/gl-sast/app
+DOCKER_PATH = registry.gitlab.com/gitlab-org/app
 DOCKER_TAG = latest
 
 .PHONY: docker-build
