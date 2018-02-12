@@ -1,3 +1,8 @@
+image: docker:latest
+
+services:
+- docker:dind
+
 variables:
   DOCKER_DRIVER: overlay
 
@@ -23,7 +28,6 @@ tests:
         - make test
 
 build_docker:
-    image: docker:latest
     stage: build
     before_script:
         - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
