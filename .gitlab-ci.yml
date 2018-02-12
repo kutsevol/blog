@@ -20,4 +20,5 @@ tests:
 build_docker:
     stage: build
     script:
+        - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
         - make docker-build
