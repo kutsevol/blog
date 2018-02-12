@@ -1,8 +1,9 @@
 stages:
     - pre-build
     - test
+    - build
 
-lint-python:
+lint_python:
     stage: pre-build
     image: python:3.6.1
     script:
@@ -15,3 +16,8 @@ tests:
     script:
         - make install-requirements
         - make test
+
+build_docker:
+    stage: build
+    script:
+        - make docker-build
