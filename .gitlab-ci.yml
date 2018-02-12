@@ -1,10 +1,10 @@
-#image: docker:latest
-#
-#services:
-#- docker:dind
-#
-#variables:
-#  DOCKER_DRIVER: overlay
+image: docker:latest
+
+services:
+- docker:dind
+
+variables:
+  DOCKER_DRIVER: overlay
 
 stages:
     - pre-build
