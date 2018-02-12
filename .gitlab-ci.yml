@@ -5,16 +5,16 @@ stages:
 
 lint_python:
     stage: pre-build
-    image: python:3.6.1
+    image: python:latest
     script:
         - pip install flake8
         - make lint
 
 tests:
     stage: test
-    image: python:3.6.1
+    image: python:latest
     script:
-        - make install-requirements
+        - make pip-install
         - make test
 
 build_docker:
