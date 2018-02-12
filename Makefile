@@ -1,5 +1,5 @@
-DOCKER_PATH = app
-DOCKER_TAG = $(shell git rev-parse --abbrev-ref HEAD)
+DOCKER_PATH = registry.gitlab.com/gitlab-org/gl-sast/app
+DOCKER_TAG = latest
 
 .PHONY: docker-build
 docker-build:
