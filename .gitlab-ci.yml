@@ -27,7 +27,7 @@ tests:
 
 build_docker:
     stage: build
-    image: docker:latest
+    image: gitlab/bind
     before_script:
         - apt-get install build-essential
         - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
