@@ -1,11 +1,18 @@
 FROM python:latest
+# New style declare MAINTAINER
 LABEL maintainer="arthur.kutsevol@gmail.com"
 
 RUN mkdir /app
 WORKDIR /app
 
-ADD requirements.txt /app
-RUN make install-requirements
+# For speed up build by using caches effectively (best practices)
+ADD requirements.txt Makefile /app/
+RUN make pip-install
 
-ADD . /app
+ADD . /app/
+
+# So as not to create additional layers to reduce the size of the image
+RUN make migrate && make static
+
+EXPOSE 8000
 CMD make run
