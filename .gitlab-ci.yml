@@ -1,8 +1,10 @@
-services:
-- docker:dind
-
-variables:
-  DOCKER_DRIVER: overlay
+#image: docker:latest
+#
+#services:
+#- docker:dind
+#
+#variables:
+#  DOCKER_DRIVER: overlay
 
 stages:
     - pre-build
@@ -16,6 +18,8 @@ lint_python:
         - pip install flake8
     script:
         - make lint
+    tags:
+        - shared-docker
 
 tests:
     stage: test
@@ -24,13 +28,14 @@ tests:
         - make pip-install
     script:
         - make test
+    tags:
+        - shared-docker
 
 build_docker:
     stage: build
-    image: gitlab/dind
     before_script:
-        - set -x
-        - apt-get install build-essential
         - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     script:
         - make docker-build
+    tags:
+        - shell
