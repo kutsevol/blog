@@ -1,17 +1,44 @@
+image: docker:latest
+
+services:
+    - docker:dind
+
+variables:
+    DOCKER_DRIVER: overlay
+    SECRET_PATH: ./my_site/settings/secret_settings.py
+
 stages:
     - pre-build
     - test
+    - build
 
-lint-python:
+lint_python:
     stage: pre-build
-    image: python:3.6.1
-    script:
+    image: python:latest
+    before_script:
         - pip install flake8
+    script:
         - make lint
+    tags:
+        - shared
 
 tests:
     stage: test
-    image: python:3.6.1
+    image: python:latest
+    before_script:
+        - make pip-install
     script:
-        - make install-requirements
         - make test
+    tags:
+        - shared
+
+build_docker:
+    stage: build
+    before_script:
+        - echo SECRET_KEY = \'$SECRET_KEY\' > $SECRET_PATH
+        - apk update && apk add make
+        - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    script:
+        - make docker-build
+    tags:
+        - docker
