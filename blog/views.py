@@ -1,4 +1,5 @@
 from django.db.models import Count
+from django.db.utils import OperationalError
 from django.utils import timezone
 from django.views.generic import DetailView, ListView
 
@@ -39,7 +40,8 @@ class PostListView(ListView):
 class PostView(DetailView):
     """
     Class based on DetailView for displayed one page.
-    model - represents an alternative query of the form Post.objects.all()
+    model - if defined then method get_queryset returned Post.objects.all() same
+    behavior with queryset = Post.objects.all()
     template_name - path to template file for this view.
     context_object_name - name of variable to access from templates.
     """
@@ -133,10 +135,15 @@ class PostsFeed(ListView):
     posts - variable for template used in XML, filtered posts which not
     published yet.
     """
-    queryset = Post.objects.all()
     template_name = 'rss/atom.xml'
     content_type = 'application/xml'
-    updated = queryset.first().published_date if queryset else None
+    # When db not migrate and try to get some data from db raised OperationError
+    # If db migrate but hasn't any data raised AttributeError
+    try:
+        queryset = Post.objects.all()
+        updated = queryset.first().published_date
+    except (OperationalError, AttributeError):
+        updated = None
     posts = Post.objects.exclude(published_date__gte=timezone.now())
 
     def get_context_data(self, **kwargs):

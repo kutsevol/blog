@@ -1,16 +1,16 @@
 # Python
 **/*.pyc
+**/*.pyo
 .python-version
 **/__pycache__/
 **/.pytest_cache/
 
 
 # Django
-**/media/
 **/staticfiles/
-**/*secret_settings.py
 **/*.sqlite3
 **/*.json
 
-# IDEA
-.idea/
+# Other
+**/.idea/
+**/.git/
