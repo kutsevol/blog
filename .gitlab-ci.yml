@@ -1,10 +1,11 @@
 image: docker:latest
 
 services:
-- docker:dind
+    - docker:dind
 
 variables:
-  DOCKER_DRIVER: overlay
+    DOCKER_DRIVER: overlay
+    SECRET_PATH: ./my_site/settings/secret_settings.py
 
 stages:
     - pre-build
@@ -34,7 +35,7 @@ tests:
 build_docker:
     stage: build
     before_script:
-        - echo $SECRET_KEY
+        - echo SECRET_KEY = \'$SECRET_KEY\' > $SECRET_PATH
         - apk update && apk add make
         - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     script:
