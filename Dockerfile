@@ -9,10 +9,15 @@ WORKDIR /app
 ADD requirements.txt Makefile /app/
 RUN make pip-install
 
-ADD . /app/
+ADD . .
+
+ARG SECRET_SETTINGS
+ADD $SECRET_SETTINGS my_site/settings/
 
 # So as not to create additional layers to reduce the size of the image
-RUN make migrate && make static
+#RUN make migrate && make static
+RUN make migrate
+RUN make static
 
 EXPOSE 8000
 CMD make run
