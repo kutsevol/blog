@@ -1,9 +1,11 @@
 DOCKER_PATH = registry.gitlab.com/gitlab-org/app
 DOCKER_TAG = latest
+ARG = SECRET_SETTINGS
+VALUE = ./my_site/settings/secret_settings.py
 
 .PHONY: docker-build
 docker-build:
-	docker build -t $(DOCKER_PATH):$(DOCKER_TAG) .
+	docker build --build-arg $(ARG)=$(VALUE) -t $(DOCKER_PATH):$(DOCKER_TAG) .
 
 .PHONY: docker-run
 docker-run:
@@ -11,11 +13,11 @@ docker-run:
 
 .PHONY: docker-rm-images
 docker-rm-images:
-	docker rmi $(docker images -f "dangling=true" -q)
+	docker rmi $(shell docker images -f "dangling=true" -q)
 
 .PHONY: docker-rm-containers
 docker-rm-containers:
-	docker rm -f $(docker ps -a -q)
+	docker rm -f $(shell docker ps -a -q)
 
 .PHONY: pip-install
 pip-install:
