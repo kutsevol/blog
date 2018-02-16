@@ -19,10 +19,9 @@ docker-rm-images:
 docker-rm-containers:
 	docker rm -f $(shell docker ps -a -q)
 
-.PHONY: pipenv-install
-pipenv-install:
-	pip install pipenv
-	pipenv install
+.PHONY: pip-install
+pip-install:
+	pip install -r requirements.txt
 
 .PHONY: lint
 lint:
