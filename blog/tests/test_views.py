@@ -1,5 +1,5 @@
 import pytest
-from django.core.urlresolvers import reverse, resolve
+from django.urls import reverse, resolve
 from django.urls.exceptions import NoReverseMatch
 
 from blog.tests.data import views
