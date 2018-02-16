@@ -16,6 +16,7 @@ lint_python:
     stage: pre-build
     image: python:latest
     before_script:
+        - pip install pipenv
         - pipenv install flake8
     script:
         - make lint
