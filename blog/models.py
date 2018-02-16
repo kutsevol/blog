@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
@@ -106,8 +106,9 @@ class Post(models.Model):
     and file name;
     null - If True, Django will store empty values as NULL in the database.
     """
-    author = models.ForeignKey(User)
-    category = models.ForeignKey(Category, default='')
+    author = models.ForeignKey(User, default='', on_delete=models.SET_DEFAULT)
+    category = models.ForeignKey(Category, default='',
+                                 on_delete=models.SET_DEFAULT)
     tag = models.ManyToManyField(Tag, blank=False, through='TagToPost')
 
     title = models.CharField(max_length=200, unique=True, blank=False)
@@ -170,8 +171,8 @@ class TagToPost(models.Model):
     Class for many-to-many relationship.
     Fields: post, tag - ForeignKey. A many-to-one relationship.
     """
-    post = models.ForeignKey(Post)
-    tag = models.ForeignKey(Tag)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
 
     def __str__(self):
         """
