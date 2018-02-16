@@ -16,7 +16,7 @@ lint_python:
     stage: pre-build
     image: python:latest
     before_script:
-        - pip install flake8
+        - pipenv install flake8
     script:
         - make lint
     tags:
@@ -26,7 +26,7 @@ tests:
     stage: test
     image: python:latest
     before_script:
-        - make pip-install
+        - make pipenv-install
     script:
         - make test
     tags:
