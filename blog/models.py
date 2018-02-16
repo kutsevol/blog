@@ -106,9 +106,9 @@ class Post(models.Model):
     and file name;
     null - If True, Django will store empty values as NULL in the database.
     """
-    author = models.ForeignKey(User, on_delete=models.SET_NULL)
+    author = models.ForeignKey(User, on_delete=models.SET_DEFAULT)
     category = models.ForeignKey(Category, default='',
-                                 on_delete=models.SET_NULL)
+                                 on_delete=models.SET_DEFAULT)
     tag = models.ManyToManyField(Tag, blank=False, through='TagToPost')
 
     title = models.CharField(max_length=200, unique=True, blank=False)
