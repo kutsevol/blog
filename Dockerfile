@@ -11,8 +11,7 @@ RUN make pip-install
 
 ADD . .
 
-ARG SECRET_SETTINGS
-ADD $SECRET_SETTINGS my_site/settings/
+RUN mv my_site/settings/secret_settings.py.sample my_site/settings/secret_settings.py
 
 # So as not to create additional layers to reduce the size of the image
 RUN make migrate && make static

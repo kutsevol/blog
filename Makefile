@@ -1,11 +1,9 @@
 DOCKER_PATH = registry.gitlab.com/gitlab-org/app
 DOCKER_TAG = latest
-ARG = SECRET_SETTINGS
-VALUE = ./my_site/settings/secret_settings.py
 
 .PHONY: docker-build
 docker-build:
-	docker build --build-arg $(ARG)=$(VALUE) -t $(DOCKER_PATH):$(DOCKER_TAG) .
+	docker build -t $(DOCKER_PATH):$(DOCKER_TAG) .
 
 .PHONY: docker-run
 docker-run:
