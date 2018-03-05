@@ -55,15 +55,17 @@ class PostMartorAdmin(admin.ModelAdmin):
 
     search_fields = ['title']
 
+    readonly_fields = ['created_date', 'updated_date']
+
     save_on_top = True
 
     date_hierarchy = 'created_date'
 
     fieldsets = [
-        (None, {'fields': ['author', 'slug']}),
+        (None, {'fields': ['author', 'slug', 'status']}),
         ('Body article', {'fields': ['title', 'category', 'description',
                                      'text', 'preview_image']}),
-        ('Date information', {'fields': ['created_date', 'published_date'],
+        ('Date information', {'fields': ['created_date', 'updated_date'],
                               'classes': ['collapse']}),
     ]
 

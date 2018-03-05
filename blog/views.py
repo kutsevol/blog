@@ -1,8 +1,9 @@
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.db.utils import OperationalError
 from django.utils import timezone
 from django.views.generic import DetailView, ListView
 
+from .choices import STATUS
 from .models import Post, Category
 from .settings import BLOG_TITLE
 
@@ -18,8 +19,8 @@ class PostListView(ListView):
 
     context_object_name - name of variable to access from templates.
     """
-    queryset = Post.objects.filter(published_date__lte=timezone.now()).\
-        order_by('-published_date')
+    queryset = Post.objects.filter(Q(status=STATUS.published)).\
+        order_by('-updated_date')
     template_name = 'blog/post_list.html'
     context_object_name = 'posts'
 
@@ -95,9 +96,9 @@ class CategoryListView(ListView):
         context['count_category'] = Post.objects.values(*values).\
             order_by('category').annotate(count=Count('category'))
 
-        values = ('title', 'slug', 'published_date', 'category__title')
+        values = ('title', 'slug', 'updated_date', 'category__title')
         context['post_category_date'] = Post.objects.values(*values).\
-            order_by('-published_date')
+            order_by('-updated_date')
         return context
 
 
@@ -141,10 +142,10 @@ class PostsFeed(ListView):
     # If db migrate but hasn't any data raised AttributeError
     try:
         queryset = Post.objects.all()
-        updated = queryset.first().published_date
+        updated = queryset.first().updated_date
     except (OperationalError, AttributeError):
         updated = None
-    posts = Post.objects.exclude(published_date__gte=timezone.now())
+    posts = Post.objects.exclude(updated_date__gte=timezone.now())
 
     def get_context_data(self, **kwargs):
         """
