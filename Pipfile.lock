@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "db49d0118123bb1cbe06e2774bd4fd969ec9e6fee2d98acb57945cb789d892b3"
+            "sha256": "2a41ca41fd15a0be569895a66e704de9651f7dc784e33194534f3358046cdea7"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -9,9 +9,9 @@
             "os_name": "posix",
             "platform_machine": "x86_64",
             "platform_python_implementation": "CPython",
-            "platform_release": "4.15.0-041500-generic",
+            "platform_release": "4.4.0-112-generic",
             "platform_system": "Linux",
-            "platform_version": "#201801282230 SMP Sun Jan 28 22:31:30 UTC 2018",
+            "platform_version": "#135-Ubuntu SMP Fri Jan 19 11:48:36 UTC 2018",
             "python_full_version": "3.6.1",
             "python_version": "3.6",
             "sys_platform": "linux"
@@ -73,6 +73,13 @@
                 "sha256:59f65e9d4e887f303d429ce905922721f2fe5924a7dbedc9e11ee974598bc78c"
             ],
             "version": "==0.9.4.1"
+        },
+        "django-model-utils": {
+            "hashes": [
+                "sha256:4356fad5f6fc9910da865fbf9371f9c2e028606dff2bbd8e32e67569260e530d",
+                "sha256:a9baa7de943b4e8afa61728ce8c42ce99e88cc87d40e74df2b060a78d22c0f5c"
+            ],
+            "version": "==3.1.1"
         },
         "flake8": {
             "hashes": [

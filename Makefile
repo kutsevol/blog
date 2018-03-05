@@ -17,6 +17,10 @@ docker-rm-images:
 docker-rm-containers:
 	docker rm -f $(shell docker ps -a -q)
 
+.PHONY: pip-req
+pip-req:
+	pip freeze > requirements.txt
+
 .PHONY: pip-install
 pip-install:
 	pip install -r requirements.txt

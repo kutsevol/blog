@@ -13,7 +13,7 @@ POST_ALL_ATTRS = {
     'description': 'description',
     'text': 'text',
     'created_date': date.today(),
-    'published_date': date.today()
+    'updated_date': date.today()
 }
 
 AUTHOR = 'test_user'

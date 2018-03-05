@@ -24,7 +24,7 @@
                                 {% if pcd.category__title == category.title %}
                                     <h5>
                                         <a href="/{{ pcd.slug }}">
-                                            {{ pcd.published_date|date:"d M Y" }}. {{ pcd.title }}
+                                            {{ pcd.created_date|date:"d M Y" }}. {{ pcd.title }}
                                         </a>
                                     </h5>
                                 {% endif %}
