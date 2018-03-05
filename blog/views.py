@@ -20,7 +20,7 @@ class PostListView(ListView):
     """
     context_object_name = 'posts'
     queryset = Post.objects.filter(Q(status=STATUS.published)).\
-        order_by('-updated_date')
+        order_by('-created_date')
     template_name = 'blog/post_list.html'
 
     def get_context_data(self, **kwargs):
