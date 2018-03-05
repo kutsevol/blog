@@ -1,6 +1,5 @@
 from django.db.models import Count, Q
 from django.db.utils import OperationalError
-from django.utils import timezone
 from django.views.generic import DetailView, ListView
 
 from .choices import STATUS
@@ -19,10 +18,10 @@ class PostListView(ListView):
 
     context_object_name - name of variable to access from templates.
     """
+    context_object_name = 'posts'
     queryset = Post.objects.filter(Q(status=STATUS.published)).\
         order_by('-updated_date')
     template_name = 'blog/post_list.html'
-    context_object_name = 'posts'
 
     def get_context_data(self, **kwargs):
         """
@@ -46,9 +45,10 @@ class PostView(DetailView):
     template_name - path to template file for this view.
     context_object_name - name of variable to access from templates.
     """
+    context_object_name = 'post'
     model = Post
     template_name = 'blog/post.html'
-    context_object_name = 'post'
+    queryset = Post.objects.filter(Q(status=STATUS.published))
 
     def get_context_data(self, **kwargs):
         """
@@ -74,9 +74,10 @@ class CategoryListView(ListView):
 
     context_object_name - name of variable to access from templates.
     """
+    context_object_name = 'categories'
     model = Category
     template_name = 'blog/categories.html'
-    context_object_name = 'categories'
+    queryset = Category.objects.filter(post__status=STATUS.published).distinct()
 
     def get_context_data(self, **kwargs):
         """
@@ -93,12 +94,14 @@ class CategoryListView(ListView):
         context = super().get_context_data(**kwargs)
 
         values = ('category__title', )
-        context['count_category'] = Post.objects.values(*values).\
+        context['count_category'] = Post.objects.\
+            filter(Q(status=STATUS.published)).values(*values).\
             order_by('category').annotate(count=Count('category'))
 
-        values = ('title', 'slug', 'updated_date', 'category__title')
-        context['post_category_date'] = Post.objects.values(*values).\
-            order_by('-updated_date')
+        values = ('title', 'slug', 'created_date', 'category__title')
+        context['post_category_date'] = Post.objects. \
+            filter(Q(status=STATUS.published)).values(*values). \
+            order_by('-created_date')
         return context
 
 
@@ -112,9 +115,9 @@ class CategoryView(DetailView):
 
     context_object_name - name of variable to access from templates.
     """
+    context_object_name = 'category'
     model = Category
     template_name = 'blog/category.html'
-    context_object_name = 'category'
 
 
 # TODO Need move this class and all functionality by feed rss in separated app.
@@ -136,8 +139,8 @@ class PostsFeed(ListView):
     posts - variable for template used in XML, filtered posts which not
     published yet.
     """
-    template_name = 'rss/atom.xml'
     content_type = 'application/xml'
+    template_name = 'rss/atom.xml'
     # When db not migrate and try to get some data from db raised OperationError
     # If db migrate but hasn't any data raised AttributeError
     try:
@@ -145,7 +148,7 @@ class PostsFeed(ListView):
         updated = queryset.first().updated_date
     except (OperationalError, AttributeError):
         updated = None
-    posts = Post.objects.exclude(updated_date__gte=timezone.now())
+    posts = Post.objects.filter(Q(status=STATUS.published))
 
     def get_context_data(self, **kwargs):
         """
