@@ -1,10 +1,12 @@
+{% load count_views %}
+
 <span class="indent">
     <strong>
         Category:
     </strong>
 
     <!--All categories for post-->
-    {%  for post_category in posts_category %}
+    {% for post_category in posts_category %}
         {% if post.title == post_category.title %}
             <a data-parent="#accordion" href="/categories#{{ post_category.category__title }}">
                 {{ post_category.category__title }}
@@ -26,5 +28,11 @@
 <span class="indent-2x">
     <strong>
         {{ post.created_date|date:"d M Y" }}
+    </strong>
+</span>
+
+<span class="indent">
+    <strong>
+        Views: {% get_all_posts_statistics post.slug %}
     </strong>
 </span>
