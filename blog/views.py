@@ -1,9 +1,11 @@
 from django.db.models import Count, Q
 from django.db.utils import OperationalError
+from django.shortcuts import get_object_or_404, render_to_response
+from django.utils import timezone
 from django.views.generic import DetailView, ListView
 
 from .choices import STATUS
-from .models import Post, Category
+from .models import Category, Post, PostStatistic, UserStatistic
 from .settings import BLOG_TITLE
 
 
@@ -47,6 +49,7 @@ class PostView(DetailView):
     """
     context_object_name = 'post'
     model = Post
+    object = None
     template_name = 'blog/post.html'
     queryset = Post.objects.filter(Q(status=STATUS.published))
 
@@ -60,6 +63,31 @@ class PostView(DetailView):
         value = ('title', 'category__title')
         context['posts_category'] = Post.objects.values(*value)
         return context
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object, **kwargs)
+
+        post = get_object_or_404(Post, slug=self.kwargs['slug'])
+
+        obj_usr, crt_usr = UserStatistic.objects.get_or_create(
+            post=post,
+            session=request.session.session_key,
+            defaults={'post': post, 'session': request.session.session_key}
+        )
+
+        obj, created = PostStatistic.objects.get_or_create(
+            post=post,
+            defaults={'post': post, 'date': timezone.now()}
+        )
+
+        if crt_usr:
+            obj.views += 1
+            obj.save(update_fields=['views'])
+        context['views'] = PostStatistic.objects.get(post=post).views
+        return render_to_response(
+            template_name=self.template_name, context=context
+        )
 
 
 # TODO Need move this class and CategoryView with all functionality in
