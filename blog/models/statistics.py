@@ -11,3 +11,8 @@ class PostStatistic(models.Model):
 
     def __str__(self):
         return self.post.title
+
+
+class UserStatistic(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    session = models.CharField(max_length=100)
