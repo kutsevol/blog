@@ -15,4 +15,4 @@ class PostStatistic(models.Model):
 
 class UserStatistic(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    session = models.CharField(max_length=100)
+    cookie = models.CharField(max_length=1000, blank=True)
