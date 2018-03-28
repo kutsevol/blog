@@ -26,8 +26,7 @@ class Tag(models.Model):
     class Meta:
         """
         Attributes:
-        verbose_name - A human-readable name for the object,
-        singular;
+        verbose_name - A human-readable name for the object, singular;
         verbose_name_plural - The plural name for the object.
         """
         verbose_name = "Tag"
