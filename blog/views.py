@@ -72,8 +72,8 @@ class PostView(DetailView):
 
         obj_usr, crt_usr = UserStatistic.objects.get_or_create(
             post=post,
-            session=request.session.session_key,
-            defaults={'post': post, 'session': request.session.session_key}
+            cookie=request.META['HTTP_COOKIE'],
+            defaults={'post': post, 'cookie': request.META['HTTP_COOKIE']}
         )
 
         obj, created = PostStatistic.objects.get_or_create(
