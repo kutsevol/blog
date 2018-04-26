@@ -7,38 +7,38 @@
 {% endblock %}
 
 {% block content %}
-        {% for post in posts %}
-            <div class="text-center">
+    {% for post in posts %}
+        <div class="text-center">
+            <a href="{% url 'post' slug=post.slug %}">
+                <img class="img-circle" width="40%" height="200"
+                     src='{% if post.preview_image %}{{ post.preview_image.url }}{% endif %}'>
+            </a>
+        </div>
+        <div class="text-center">
+            <h1>
                 <a href="{% url 'post' slug=post.slug %}">
-                    <img class="img-circle" width="40%" height="200"
-                         src='{% if post.preview_image %}{{ post.preview_image.url }}{% endif %}'>
+                    {{ post.title }}
                 </a>
-            </div>
-            <div class="text-center">
-                <h1>
-                    <a href="{% url 'post' slug=post.slug %}">
-                        {{ post.title }}
-                    </a>
-                </h1>
+            </h1>
 
-                <!--Include style for categories and tags for post-->
-                {% include 'blog/block_categories_tags.html' %}
-            </div>
+            <!--Include style for categories and tags for post-->
+            {% include 'blog/block_categories_tags.html' %}
+        </div>
 
-            <span class="post-description">
-                {{ post.description|safe_markdown }}
-            </span>
+        <span class="post-description">
+            {{ post.description|safe_markdown }}
+        </span>
 
-            <div class="text-right">
-                <h1>
-                    <a href="{% url 'post' slug=post.slug %}">
-                        <button type="button" class="btn btn-info btn-lg">
-                            <span class="lobster">
-                                Continue Reading
-                            </span>
-                        </button>
-                    </a>
-                </h1>
-            </div>
-        {% endfor %}
+        <div class="text-right">
+            <h1>
+                <a href="{% url 'post' slug=post.slug %}">
+                    <button type="button" class="btn btn-info btn-lg">
+                        <span class="lobster">
+                            Continue Reading
+                        </span>
+                    </button>
+                </a>
+            </h1>
+        </div>
+    {% endfor %}
 {% endblock content %}
