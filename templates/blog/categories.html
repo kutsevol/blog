@@ -5,34 +5,32 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h1 class="text-center">All categories</h1>
-        <div class="panel-group" id="accordion">
-            <div class="panel panel-default">
-                {% for category in categories %}
-                    <div class="panel-heading">
-                        <h2 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#{{ category.title }}">{{ category.title }}</a>
-                            {% for cc in count_category %}
-                                <sup>{% if cc.category__title == category.title %} {{ cc.count }}{% endif %}</sup>
-                            {% endfor %}
-                        </h2>
+    <h1 class="text-center">All categories</h1>
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            {% for category in categories %}
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#{{ category.title }}">{{ category.title }}</a>
+                        {% for cc in count_category %}
+                            <sup>{% if cc.category__title == category.title %} {{ cc.count }}{% endif %}</sup>
+                        {% endfor %}
+                    </h2>
+                </div>
+                <div id="{{ category.title }}" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        {% for pcd in post_category_date %}
+                            {% if pcd.category__title == category.title %}
+                                <h5>
+                                    <a href="/{{ pcd.slug }}">
+                                        {{ pcd.created_date|date:"d M Y" }}. {{ pcd.title }}
+                                    </a>
+                                </h5>
+                            {% endif %}
+                        {% endfor %}
                     </div>
-                    <div id="{{ category.title }}" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            {% for pcd in post_category_date %}
-                                {% if pcd.category__title == category.title %}
-                                    <h5>
-                                        <a href="/{{ pcd.slug }}">
-                                            {{ pcd.created_date|date:"d M Y" }}. {{ pcd.title }}
-                                        </a>
-                                    </h5>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
