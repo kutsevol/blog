@@ -1,4 +1,5 @@
 import pytest
+
 from django.urls import reverse, resolve
 from django.urls.exceptions import NoReverseMatch
 
