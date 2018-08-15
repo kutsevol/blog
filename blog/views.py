@@ -64,6 +64,7 @@ class PostView(DetailView):
         context['posts_category'] = Post.objects.values(*value)
         return context
 
+    # TODO: Need to add a tests for this method.
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         context = self.get_context_data(object=self.object, **kwargs)
@@ -72,8 +73,9 @@ class PostView(DetailView):
 
         obj_usr, crt_usr = UserStatistic.objects.get_or_create(
             post=post,
-            cookie=request.META['HTTP_COOKIE'],
-            defaults={'post': post, 'cookie': request.META['HTTP_COOKIE']}
+            cookie=request.META.get('HTTP_COOKIE', 'new_user'),
+            defaults={'post': post, 'cookie': request.META.get('HTTP_COOKIE',
+                                                               'new_user')}
         )
 
         obj, created = PostStatistic.objects.get_or_create(

@@ -1,7 +1,7 @@
 VALID_BLOG_REVERSE = (
     ('/', 'posts', {}),
     ('/feeds/atom.xml', 'rss_feed', {}),
-    ('/categories', 'categories', {}),
+    ('/categories/', 'categories', {}),
     ('/test/', 'post', {'slug': 'test'})
 )
 
